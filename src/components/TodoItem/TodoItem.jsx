@@ -7,7 +7,7 @@ import {useDeleteTodoItem, useUpdateTodoItemChecked, useUpdateTodoItemPriority} 
 import {Priorities} from "./Priority";
 
 const checkedCss = css`
-  color: #B5B5BA;
+  color: var(--colorFrenchGray);
   text-decoration: line-through;
 `
 
@@ -21,27 +21,26 @@ const Title = styled.span(props => {
 
 
 export const TodoItem = ({itemId, title, checked, itemPriority}) => {
-    const { mutate: deleteMutate } = useDeleteTodoItem();
-    const { mutate: updateCheckedMutate } = useUpdateTodoItemChecked();
-    const { mutate: updatePriorityMutate } = useUpdateTodoItemPriority();
-    const [priority, setCurrentPriority] = useState(itemPriority);
+  const { mutate: deleteMutate } = useDeleteTodoItem();
+  const { mutate: updateCheckedMutate } = useUpdateTodoItemChecked();
+  const { mutate: updatePriorityMutate } = useUpdateTodoItemPriority();
+  const [priority, setCurrentPriority] = useState(itemPriority);
 
-    const handleDelete = () => {
-        // const confirm = window.confirm("Вы уверены, что хотите безвозвратно удалить элемент?")
-        // if(confirm) {
-        //     deleteMutate(itemId);
-        // }
-        deleteMutate(itemId);
-    };
+  const handleDelete = () => {
+      const confirm = window.confirm("Вы уверены, что хотите безвозвратно удалить элемент?")
+      if(confirm) {
+          deleteMutate(itemId);
+      }
+  };
 
-    const handleCheckboxChange = () => {
-        updateCheckedMutate({ id: itemId, checked: !checked });
-    };
+  const handleCheckboxChange = () => {
+      updateCheckedMutate({ id: itemId, checked: !checked });
+  };
 
-    const handlePriorityChange = (newPriority) => {
-        setCurrentPriority(newPriority);
-        updatePriorityMutate({ id: itemId, priority: newPriority });
-    };
+  const handlePriorityChange = (newPriority) => {
+      setCurrentPriority(newPriority);
+      updatePriorityMutate({ id: itemId, priority: newPriority });
+  };
 
   return (
     <TodoItemContainer>

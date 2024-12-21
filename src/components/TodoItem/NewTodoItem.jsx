@@ -10,7 +10,7 @@ const Input = styled.input`
 
   &::placeholder {
     font-size: 15px;
-    color: rgba(63,63,63,0.6);
+    color: var(--colorOnyx);
   }
 `
 

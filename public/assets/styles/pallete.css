@@ -2,5 +2,11 @@
     --colorGreen: #70ff67;
     --colorYellow: #ffa26f;
     --colorRed: #ff7080;
-    --colorBlack: #743fb5;
+    --colorFrenchGray: #B5B5BA;
+    --colorOnyx: rgba(63,63,63,0.6);
+    --colorWhiteSmoke: #F4F4F4;
+    --colorBlackTransparent: rgba(0,0,0,0.2);
+    --colorJet: #413F3F;
+    --colorSilver: #C4C4C4;
+    --colorPlatinum: #E2E2E2;
 }

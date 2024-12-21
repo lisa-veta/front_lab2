@@ -47,6 +47,7 @@ const PriorityContainer = styled.div`
   gap: 5px;
     min-height: 20px;
 `;
+
 const priorities = [
     { color: 'var(--colorGreen)', value: 'low' },
     { color: 'var(--colorYellow)', value: 'medium' },
@@ -71,6 +72,7 @@ export const Priorities = ({ priority, setPriority }) => {
         ...priorities.filter(p => p.value === selectedPriority),
         ...priorities.filter(p => p.value !== selectedPriority),
     ];
+
     return  (
         <PriorityContainer>
             {sortedPriorities.map(({ color, value }) => (

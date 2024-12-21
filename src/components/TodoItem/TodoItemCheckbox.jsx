@@ -1,13 +1,13 @@
 import styled, {css} from "styled-components";
 
 const disabledCss = css`
-  background-color: #E2E2E2;
+  background-color: var(--colorPlatinum);
   border-width: 0px;
 `
 
 const checkedCss = css`
-  border-color: #B5B5BA;
-  background-color: #B5B5BA;
+  border-color: var(--colorFrenchGray);
+  background-color:  var(--colorFrenchGray);
   background-image: url(assets/images/svg/todo-done.svg);
   background-position: center;
   background-repeat: no-repeat;
@@ -18,7 +18,7 @@ export const CheckboxContainer = styled.span(props => {
     display: inline-block;
     min-width: 20px;
     min-height: 20px;
-    border: 2px solid #C4C4C4;
+    border: 2px solid var(--colorSilver);
     border-radius: 6px;
     cursor: pointer;
     ${props.disabled ? disabledCss : ''}
