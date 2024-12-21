@@ -1,7 +1,10 @@
-import React from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import styled, { css } from "styled-components"
 import {TodoItemContainer} from './TodoItemContainer'
 import {TodoItemCheckbox} from './TodoItemCheckbox';
+import {DeleteItem} from "./DeleteItem";
+import {useDeleteTodoItem, useUpdateTodoItemChecked, useUpdateTodoItemPriority} from '../../data/hooks/useData';
+import {Priorities} from "./Priority";
 
 const checkedCss = css`
   color: #B5B5BA;
@@ -11,29 +14,43 @@ const checkedCss = css`
 const Title = styled.span(props => {
   return `
     font-size: 15px;
+    word-break: break-word; 
     ${props.checked ? checkedCss : ''};
   `;
 })
 
-const Delete = styled.span`
-  display: inline-block;
-  width: 13px;
-  height: 13px;
-  background-image: url(assets/images/png/delete.png);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 13px;
-  cursor: pointer;
-`;
 
-export const TodoItem = ({title, checked}) => {
+export const TodoItem = ({itemId, title, checked, itemPriority}) => {
+    const { mutate: deleteMutate } = useDeleteTodoItem();
+    const { mutate: updateCheckedMutate } = useUpdateTodoItemChecked();
+    const { mutate: updatePriorityMutate } = useUpdateTodoItemPriority();
+    const [priority, setCurrentPriority] = useState(itemPriority);
+
+    const handleDelete = () => {
+        // const confirm = window.confirm("Вы уверены, что хотите безвозвратно удалить элемент?")
+        // if(confirm) {
+        //     deleteMutate(itemId);
+        // }
+        deleteMutate(itemId);
+    };
+
+    const handleCheckboxChange = () => {
+        updateCheckedMutate({ id: itemId, checked: !checked });
+    };
+
+    const handlePriorityChange = (newPriority) => {
+        setCurrentPriority(newPriority);
+        updatePriorityMutate({ id: itemId, priority: newPriority });
+    };
+
   return (
     <TodoItemContainer>
-      <TodoItemCheckbox checked={checked} />
+      <TodoItemCheckbox checked={checked} onChange={handleCheckboxChange}/>
       <Title checked={checked}>
         {title}
       </Title>
-      <Delete />
+        <Priorities priority={priority} setPriority={handlePriorityChange} />
+      <DeleteItem onDelete={handleDelete}/>
     </TodoItemContainer>
   )
 }

@@ -15,6 +15,7 @@ const Wrapper = styled.div`
 const Main = styled.div`
   width: 400px;
   height: 600px;
+    overflow-y: auto;
   background-color: #F4F4F4;
   box-shadow: 16px 12px 54px 0 rgba(0,0,0,0.2);
   font-family: Inter;

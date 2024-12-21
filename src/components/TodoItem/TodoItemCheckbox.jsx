@@ -16,8 +16,8 @@ const checkedCss = css`
 export const CheckboxContainer = styled.span(props => {
   return `
     display: inline-block;
-    width: 20px;
-    height: 20px;
+    min-width: 20px;
+    min-height: 20px;
     border: 2px solid #C4C4C4;
     border-radius: 6px;
     cursor: pointer;
@@ -27,6 +27,6 @@ export const CheckboxContainer = styled.span(props => {
 });
 
 
-export const TodoItemCheckbox = ({disabled, checked}) => {
-  return <CheckboxContainer disabled={disabled} checked={checked} />
+export const TodoItemCheckbox = ({disabled, checked, onChange}) => {
+  return <CheckboxContainer disabled={disabled} checked={checked} onClick={onChange} />
 }

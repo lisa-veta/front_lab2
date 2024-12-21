@@ -4,9 +4,11 @@ import {NewTodoItem} from '../TodoItem/NewTodoItem';
 import {TodoItem} from '../TodoItem/TodoItem';
 import {useData} from '../../data/hooks/useData';
 import {SearchInput} from './components/SearchInput';
+import {PriorityFilter} from "../TodoItem/Priority";
 
 export const TodoItems = () => {
   const [searchValue, setSearchValue] = useState('');
+  const [filterPriority, setFilterPriority] = useState(null);
 
   const {data: todoItems, isLoading} = useData();
 
@@ -17,26 +19,32 @@ export const TodoItems = () => {
       </TodoItemsContainer>
     );
   }
-
+  const normalizeString = (str) => str.replace(/\s+/g, '').toLowerCase();
   // Фукнция filter вызывает для каждого элемента переданный ей колбек
   // И формирует в filteredBySearchItems новый массив элементов, для которых колбек вернул true
   // Для проверки вхождения подстроки в строку нужно использовать indexOf
   const filteredBySearchItems = todoItems.filter((todoItem) => {
-    // const clearedTodoItemTitle = очистка от пробелов + приведение к одному из регистров
-    // const clearedSearchValue = очистка от пробелов + приведение к одному из регистров
-    // const isSearched = проверка вхождения строки поиска в строку заголовка
-    // return isSearched
-    return true; // удалить после реализации фильтрации
-  })
+    const clearedTodoItemTitle = normalizeString(todoItem.title);
+    const clearedSearchValue = normalizeString(searchValue);
+    const isSearched = clearedTodoItemTitle.includes(clearedSearchValue);
+    return searchValue.length >= 3 ? isSearched : true;
+  });
 
+    const sortedByPriorityItems = filterPriority
+        ? [
+            ...filteredBySearchItems.filter(item => item.priority === filterPriority),
+            ...filteredBySearchItems.filter(item => item.priority !== filterPriority),
+        ]
+        : filteredBySearchItems;
 
-  const todoItemsElements = filteredBySearchItems.map((item, index) => {
-    return <TodoItem key={item.id} title={item.title} checked={item.isDone} />;
+  const todoItemsElements = sortedByPriorityItems.map((item, index) => {
+    return <TodoItem key={item.id} itemId={item.id} title={item.title} checked={item.isDone} itemPriority={item.priority} />;
   });
 
   return (
     <TodoItemsContainer>
-      <SearchInput value={searchValue} />
+      <PriorityFilter setFilterPriority={setFilterPriority} />
+      <SearchInput value={searchValue} setValue={setSearchValue} />
       {todoItemsElements}
       <NewTodoItem />
     </TodoItemsContainer>
