@@ -5,6 +5,7 @@ import {TodoItem} from '../TodoItem/TodoItem';
 import {useData} from '../../data/hooks/useData';
 import {SearchInput} from './components/SearchInput';
 import {PriorityFilter} from "../TodoItem/Priority";
+import {priorityOrder} from "../../utils/PriorityOrder";
 
 export const TodoItems = () => {
   const [searchValue, setSearchValue] = useState('');
@@ -30,12 +31,12 @@ export const TodoItems = () => {
     return searchValue.length >= 3 ? isSearched : true;
   });
 
-    const sortedByPriorityItems = filterPriority
-        ? [
-            ...filteredBySearchItems.filter(item => item.priority === filterPriority),
-            ...filteredBySearchItems.filter(item => item.priority !== filterPriority),
-        ]
-        : filteredBySearchItems;
+
+  const sortedByPriorityItems = filterPriority
+    ? priorityOrder[filterPriority].flatMap((priority) =>
+        filteredBySearchItems.filter(item => item.priority === priority)
+    )
+    : filteredBySearchItems;
 
   const todoItemsElements = sortedByPriorityItems.map((item, index) => {
     return <TodoItem key={item.id} itemId={item.id} title={item.title} checked={item.isDone} itemPriority={item.priority} />;
