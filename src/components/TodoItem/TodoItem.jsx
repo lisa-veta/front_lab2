@@ -44,12 +44,16 @@ export const TodoItem = ({itemId, title, checked, itemPriority}) => {
 
   return (
     <TodoItemContainer>
-      <TodoItemCheckbox checked={checked} onChange={handleCheckboxChange}/>
-      <Title checked={checked}>
-        {title}
-      </Title>
-        <Priorities priority={priority} setPriority={handlePriorityChange} />
-      <DeleteItem onDelete={handleDelete}/>
+        <TodoItemContainer>
+            <TodoItemCheckbox checked={checked} onChange={handleCheckboxChange}/>
+            <Title checked={checked}>
+                {title}
+            </Title>
+        </TodoItemContainer>
+      <TodoItemContainer>
+          <Priorities priority={priority} setPriority={handlePriorityChange} />
+          <DeleteItem onDelete={handleDelete}/>
+      </TodoItemContainer>
     </TodoItemContainer>
   )
 }
