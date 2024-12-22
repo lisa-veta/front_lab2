@@ -31,11 +31,13 @@ export const TodoItems = () => {
     return searchValue.length >= 3 ? isSearched : true;
   });
 
-
   const sortedByPriorityItems = filterPriority
-    ? priorityOrder[filterPriority].flatMap((priority) =>
-        filteredBySearchItems.filter(item => item.priority === priority)
-    )
+    ? [
+        ...priorityOrder[filterPriority].flatMap((priority) =>
+            filteredBySearchItems.filter(item => item.priority === priority)
+        ),
+        ...filteredBySearchItems.filter(item => !item.priority)
+      ]
     : filteredBySearchItems;
 
   const todoItemsElements = sortedByPriorityItems.map((item, index) => {
